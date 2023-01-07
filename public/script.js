@@ -80,14 +80,38 @@ function stop_video() {
 		$("#stop_video").html(html);
 	}
 }
+function invite_button() {
+	const to = prompt("Enter the email address");
+	var data = {
+		url: window.location.href,
+		to: to,
+	};
+	console.log("yes")
+	console.log(data)
+	$.ajax({
+		url: "/send-mail",
+		type: "post",
+		data: JSON.stringify(data),
+		dataType: "json",
+		contents: "application/json",
+		success: (res) => {
+			alert("Invitation Successfully Sent!");
+		},
+		error: (err) => {
+			console.log(err.responseJSON);
+		},
+	});
+}
 $(function () {
-    $("#stop_video").click(function () {
-        stop_video();
-    });
+	$("#stop_video").click(function () {
+		stop_video();
+	});
 	$("#mute_button").click(function () {
 		mute();
 	});
-
+	$("#invite_button").click(function () {
+		invite_button();
+	});
 	$("#show_chat").click(function () {
 		$(".left-window").css("display", "none");
 		$(".right-window").css("display", "block");
