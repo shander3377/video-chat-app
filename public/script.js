@@ -83,17 +83,17 @@ function stop_video() {
 function invite_button() {
 	const to = prompt("Enter the email address");
 	var data = {
-		url: window.location.href,
-		to: to,
+		"url": window.location.href,
+		"to": to,
 	};
 	console.log("yes")
 	console.log(data)
 	$.ajax({
 		url: "/send-mail",
-		type: "post",
+		type: "POST",
 		data: JSON.stringify(data),
 		dataType: "json",
-		contents: "application/json",
+		contentType: "application/json",
 		success: (res) => {
 			alert("Invitation Successfully Sent!");
 		},

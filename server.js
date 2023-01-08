@@ -35,24 +35,41 @@ app.get("/:room", (req, res) => {
 	res.render("index", { roomId: req.params.room });
 });
 app.post("/send-mail", (req, res) => {
-	console.log(req.data)
-	const to = req.body.to;
-	const url = req.body.url;
-
-	const maildata = {
-		from: "agrim310108@gmail.com",
-		to: to,
-		subject: "Someone is inviting you to a meeting",
-		html: `<p>Hey There! </p>
-        <p>Join this meeting on this link ${url}</p>
-        `,
-	};
-
-	transporter.sendMail(maildata, (error, info) => {
-		if (error) return console.log(error);
-        res.status(200).send({ msg: "Invitation Sent!", msgid: info.msgid })
+	console.log(req)
+    const to = req.body.to;
+    const url = req.body.url;
+    const mailData = {
+        from: "jinniekhuraana@gmail.com",
+        to: to,
+        subject: "Join the video chat with me!",
+        html: `<p>Hey there,</p><p>Come and join me for a video chat here - ${url}</p>`
+    };
+    transporter.sendMail(mailData, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        res.status(200).send({ message: "Invitation sent!", message_id: info.messageId });
     });
-});
+})
+// app.post("/send-mail", (req, res) => {
+// 	console.log(req.data)
+// 	const to = req.body.to;
+// 	const url = req.body.url;
+
+// 	const maildata = {
+// 		from: "jinniekhuraana@gmail.com",
+// 		to: to,
+// 		subject: "Someone is inviting you to a meeting",
+// 		html: `<p>Hey There! </p>
+//         <p>Join this meeting on this link ${url}</p>
+//         `,
+// 	};
+
+// 	transporter.sendMail(maildata, (error, info) => {
+// 		if (error) return console.log(error);
+//         res.status(200).send({ msg: "Invitation Sent!", msgid: info.msgid })
+//     });
+// });
 io.on("connection", (socket) => {
 	socket.on("join-room", (roomId, userId, userName) => {
 		socket.join(roomId);
